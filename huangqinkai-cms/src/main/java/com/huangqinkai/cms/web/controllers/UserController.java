@@ -55,5 +55,26 @@ public class UserController {
 	public String profile(){
 		return "user-space/profile";
 	}
+	
+	
+	@RequestMapping("/blogs")
+	public String blogs(Model model,HttpServletRequest requst,
+			@RequestParam(value="page",defaultValue="1") Integer page){
+		
+		Article article = new Article();
+		User user = (User) requst.getSession().getAttribute(Constant.LOGIN_USER);
+		article.setAuthor(user);
+		PageHelper.startPage(page, 3);
+		List<Article> articleList =  articleService.queryAll(article);
+		PageInfo<Article> pageInfo = new PageInfo<Article>(articleList,3);
+		String pageList = PageHelpUtil.page("/my/blogs", pageInfo, null);
+		
+		model.addAttribute("blogs", articleList);
+		model.addAttribute("pageList", pageList);
+		
+		return "user-space/blog_list";
+		
+	}	
+	
 
 }

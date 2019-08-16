@@ -57,4 +57,7 @@ public interface ArticleMapper {
 
 	public Article selectByPrimaryKey(Integer id);
 
+
+	public List<Article> queryAll(@Param("article")Article article);
+
 }

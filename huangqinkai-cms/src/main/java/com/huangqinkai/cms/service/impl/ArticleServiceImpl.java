@@ -58,6 +58,12 @@ public class ArticleServiceImpl implements ArticleService {
 		// TODO Auto-generated method stub
 		return articleMapper.selectByPrimaryKey(id);
 	}
+
+	@Override
+	public List<Article> queryAll(Article article) {
+		// TODO Auto-generated method stub
+		return articleMapper.queryAll(article);
+	}
 	
 	
 }

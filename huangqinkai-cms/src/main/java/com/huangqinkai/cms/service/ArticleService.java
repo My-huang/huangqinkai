@@ -32,6 +32,8 @@ public interface ArticleService {
 	public abstract void increasehit(Integer id);
 
 	public abstract Article selectByPrimaryKey(Integer id);
+
+	public abstract List<Article> queryAll(Article article);
 	
 
 }
