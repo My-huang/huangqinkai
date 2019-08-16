@@ -92,5 +92,18 @@ public class HomeController {
 		
 		return "home";
 	}
+	
+	@RequestMapping("/article")
+	public String article(Integer id,Model model){
+		
+		articleService.increasehit(id);
+		Article article = articleService.selectByPrimaryKey(id);
+		model.addAttribute("blog", article);
+		return "blog";
+		
+	}
+	
+	
+	
 
 }
