@@ -76,5 +76,15 @@ public class UserController {
 		
 	}	
 	
+	
+	
+	@RequestMapping("/blog/edit")
+	public String blogEdit(){
+		return "user-space/blog_edit";
+		
+	}
+	
+	
+	
 
 }
