@@ -60,4 +60,7 @@ public interface ArticleMapper {
 
 	public List<Article> queryAll(@Param("article")Article article);
 
+
+	public void remove(Integer id);
+
 }

@@ -10,6 +10,10 @@ import org.springframework.web.multipart.MultipartFile;
 public class FileUploadUtil {
 
 	public static String upload(HttpServletRequest request,MultipartFile file){
+		
+		if(file.getOriginalFilename().equals("")){
+			return "";
+		}
 		//获取upload文件夹的路径
 		String realPath = request.getSession().getServletContext().getRealPath("/upload");
 		
