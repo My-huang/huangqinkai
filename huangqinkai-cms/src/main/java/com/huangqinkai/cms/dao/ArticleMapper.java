@@ -63,4 +63,7 @@ public interface ArticleMapper {
 
 	public void remove(Integer id);
 
+
+	public void updateBtKey(/*@Param("article")*/Article article);
+
 }

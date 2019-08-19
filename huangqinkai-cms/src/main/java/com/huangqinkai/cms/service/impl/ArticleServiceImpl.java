@@ -76,6 +76,12 @@ public class ArticleServiceImpl implements ArticleService {
 		// TODO Auto-generated method stub
 		articleMapper.remove(id);
 	}
+
+	@Override
+	public void updateByKey(Article article) {
+		// TODO Auto-generated method stub
+		articleMapper.updateBtKey(article);
+	}
 	
 	
 }

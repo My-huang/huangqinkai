@@ -344,5 +344,36 @@
   </delete>
 	
 
+	<update id="updateBtKey" parameterType="com.huangqinkai.cms.domain.Article">
+	update cms_article
+	<set>
+		<if test="title != null">
+	      title =  #{title,jdbcType=VARCHAR},
+	      </if>
+	      <if test="summary != null">
+	      summary =  #{summary,jdbcType=VARCHAR},
+	      </if>
+	      <if test="picture != null">
+	       picture =  #{picture,jdbcType=VARCHAR},
+	      </if>
+	      <if test="channel != null">
+	        channel_id = #{channel.id,jdbcType=VARCHAR},
+	      </if>
+	      <if test="category != null">
+	        category_id = #{category.id,jdbcType=VARCHAR},
+	      </if>
+	     
+	      <if test="updated != null">
+	       updated =  #{updated,jdbcType=TIMESTAMP},
+	      </if>
+	      <if test="content != null">
+	      content =  #{content,jdbcType=CLOB},
+	      </if>
+	</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+
+
+
 
 </mapper>
