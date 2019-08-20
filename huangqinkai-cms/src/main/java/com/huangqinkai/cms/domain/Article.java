@@ -65,6 +65,10 @@ public class Article implements Serializable {
 	/**更新时间**/
 	private Date updated;
 
+	private String keywords;
+	
+	
+	private String orglink;
 	
 	//---------------------------------------------------------------------
 
@@ -193,7 +197,24 @@ public class Article implements Serializable {
 	}
 
 	
+	public String getKeywords() {
+		return keywords;
+	}
+	
+	public void setKeywords(String keywords) {
+		this.keywords = keywords;
+	}
+	
+	public String getOrglink() {
+		return orglink;
+	}
+	
+	public void setOrglink(String orglink) {
+		this.orglink = orglink;
+	}
+	
 	//---------------------------------------------------------------------
+
 
 	@Override
 	public int hashCode() {

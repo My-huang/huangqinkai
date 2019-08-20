@@ -47,13 +47,33 @@ public class User implements Serializable {
 	/**更新时间*/
 	private Date updated;
 	
+	/**电话*/
+	private String phone;
+	/**邮箱*/
+	private String email;
+	/**地址*/
+	private String address;
+	/**星座*/
+	private String star;
+	/**座右铭*/
+	private String motto;
 	
+	/**头像路径*/
+	private String avatarpath;
 	//------------------------------------------------------------------------
 	
 	public User() {
 		super();
 	}
 	
+	public String getAvatarpath() {
+		return avatarpath;
+	}
+
+	public void setAvatarpath(String avatarpath) {
+		this.avatarpath = avatarpath;
+	}
+
 	public User(Integer id) {
 		super();
 		this.id = id;
@@ -69,6 +89,46 @@ public class User implements Serializable {
 
 	public Integer getId() {
 		return id;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getStar() {
+		return star;
+	}
+
+	public void setStar(String star) {
+		this.star = star;
+	}
+
+	public String getMotto() {
+		return motto;
+	}
+
+	public void setMotto(String motto) {
+		this.motto = motto;
 	}
 
 	public void setId(Integer id) {

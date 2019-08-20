@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-    <title>我的博客</title>
+    <title>我的头像</title>
 
     <!-- Bootstrap -->
     <link rel="stylesheet" type="text/css" href="/libs/bootstrap/css/bootstrap.min.css"/>
@@ -43,6 +43,24 @@
 				  <div class="panel-body">
 				   <h1>我的头像</h1>
 				    	<hr/>
+				    	
+				    	<div>
+							<img alt="" src="${pageContext.request.contextPath }${avatarpath}" class="img-thumbnail">
+							</div>
+				    	
+				    	
+				    	<form action="/my/avatar/save" enctype="multipart/form-data" method="post" >
+				    	<p>上传头像：<input type="file" name="file"/>
+					  
+				    	</p>
+				    	
+				    	<p>
+				    		<button type="submit" class="btn btn-info btn-block">保存</button> 
+				    	</p>
+				    	
+				    	</form>
+				    	
+				    	
 				  </div>
 				</div>
 				

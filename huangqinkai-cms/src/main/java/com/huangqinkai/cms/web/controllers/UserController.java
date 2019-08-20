@@ -27,6 +27,7 @@ import com.huangqinkai.cms.domain.Category;
 import com.huangqinkai.cms.domain.Channel;
 import com.huangqinkai.cms.domain.User;
 import com.huangqinkai.cms.service.ArticleService;
+import com.huangqinkai.cms.service.UserService;
 import com.huangqinkai.cms.utils.FileUploadUtil;
 import com.huangqinkai.cms.utils.PageHelpUtil;
 import com.huangqinkai.cms.web.Constant;
@@ -45,6 +46,9 @@ public class UserController {
 
 	@Autowired
 	ArticleService articleService;
+	
+	@Autowired
+	UserService userService;
 	
 	@RequestMapping({"/", "/index", "/home"})
 	public String home(){
@@ -80,7 +84,7 @@ public class UserController {
 	
 	@RequestMapping("/blog/edit")
 	public String blogEdit(Integer id,Model model){
-		if(id!=0){
+		if(id!=null){
 			Article article = articleService.selectByPrimaryKey(id);
 			
 			model.addAttribute("blog", article);
@@ -109,7 +113,7 @@ public class UserController {
 			article.setStatus(1);//文章审核通过
 			article.setDeleted(false);//文章是否被删除
 			article.setCreated(new Date());//文章时间
-			
+			article.setUpdated(new Date());//文章跟新时间
 			User user = (User) request.getSession().getAttribute(Constant.LOGIN_USER);
 			article.setAuthor(user);
 			
@@ -129,7 +133,50 @@ public class UserController {
 	}
 	
 	
+	@RequestMapping("/profile/avatar")
+	public String avatar(){
+		return "user-space/avatar";
+		
+	}
+	
+	@RequestMapping("/avatar/save")
+	public String avatarSave(HttpServletRequest request,MultipartFile file,Model model){
+		
+		User user = (User)request.getSession().getAttribute(Constant.LOGIN_USER);
+		String upload = FileUploadUtil.upload(request, file);
+		if(upload.equals("")){
+			user.setAvatarpath(upload);
+		}
+		
+		userService.updateByid(user);
+		request.getServletContext().setAttribute("avatarpath", upload);
+		return "redirect:/my/profile/avatar";
+		
+	}
 	
 	
+	
+	
+	
+	/**保存用户信息**/
+	@RequestMapping("/profile/save")
+	public String profileprofileSave(User profile){
+		userService.updateByid(profile);
+		
+		return "redirect:/my/profile/Info";
+		
+	}
+	/**用户信息会写**/
+	@RequestMapping("/profile/Info")
+	public String proInfo(HttpServletRequest request,Model model){
+		
+		User loginuser = (User)request.getSession().getAttribute(Constant.LOGIN_USER);
+		
+		User user = userService.selectById(loginuser.getId());
+		
+		model.addAttribute("profile",user);
+		return "user-space/profile";
+		
+	}
 
 }

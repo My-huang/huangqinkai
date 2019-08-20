@@ -20,7 +20,7 @@
     <c:when test="${_LOGIN_USER_  != null}">
    	 <li class="nav-item">
    		<a class="nav-link" href="/my/home">
-		<img alt="" src="/images/default_avatar.png" style="max-height: 2.5rem" class="rounded img-fluid">
+		<img alt="" src="${pageContext.request.contextPath }${avatarpath}" style="max-height: 2.5rem" class="rounded img-fluid">
    		</a>
    	 </li>
    	 <li class="nav-item">
@@ -30,7 +30,7 @@
 		  </a>
 		  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
 		    <a class="dropdown-item" href="/my/home">个人主页</a>
-		    <a class="dropdown-item" href="/my/profile">个人设置</a>
+		    <a class="dropdown-item" href="/my/profile/Info">个人设置</a>
 		    <a class="dropdown-item" href="/my/articles">我的文章</a>
 		    <div class="dropdown-divider"></div>
 		    <a class="dropdown-item" href="/logout">退出</a>

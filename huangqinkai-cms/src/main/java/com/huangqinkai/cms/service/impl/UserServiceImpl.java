@@ -46,5 +46,17 @@ public class UserServiceImpl implements UserService {
 		return userMapper.count(conditions);
 	}
 
+	@Override
+	public void updateByid(User profile) {
+		// TODO Auto-generated method stub
+		userMapper.updateByid(profile);
+	}
+
+	@Override
+	public User selectById(Integer id) {
+		// TODO Auto-generated method stub
+		return userMapper.selectById(id);
+	}
+
 	
 }

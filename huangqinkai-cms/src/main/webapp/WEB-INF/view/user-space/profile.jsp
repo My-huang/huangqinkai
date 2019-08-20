@@ -41,7 +41,57 @@
 			<div class="col-md-9">
 				<div class="panel panel-default">
 				  <div class="panel-body">
-				    右边区域
+				  
+					
+					<h1>个人设置</h1>
+				    	<hr/>
+				    	
+				    	<form action="/my/profile/save" enctype="multipart/form-data" method="post" >
+				    	<input type="hidden" value="${profile.id}" name="id">
+				    	<p align="center" class="red"> </p>
+				    	<p>
+				    		<input name="username" value="${profile.username}" class="form-control" placeholder="用户名"/>
+				    		<span class="red"></span>
+				    	</p>
+				    	<p>
+				    		<input name=nickname value="${profile.nickname}" class="form-control" placeholder="昵称"/>
+				    		<span class="red"></span>
+				    	</p>
+				    	<p>
+				    		<input name="phone" value="${profile.phone}" class="form-control" placeholder="电话"/>
+				    		<span class="red"></span>
+				    	</p>
+				    	<p>
+				    		<input name="email" value="${profile.email}" class="form-control" placeholder="邮箱"/>
+				    		<span class="red"></span>
+				    	</p>
+				    	<p>
+				    		<input name="address" value="${profile.address}" class="form-control" placeholder="地址"/>
+				    		<span class="red"></span>
+				    	</p>
+				    	<p>
+				    		<input name="star" value="${profile.star}" class="form-control" placeholder="星座"/>
+				    		<span class="red"></span>
+				    	</p>
+				    	<p>
+				    		<input name="motto" value="${profile.motto}" class="form-control" placeholder="座右铭"/>
+				    		<span class="red"></span>
+				    	</p>
+				    	
+				    	<p>
+				    		<button type="submit" class="btn btn-info btn-block">保存</button> 
+				    	</p>
+				    	
+				    	</form>
+
+
+
+
+
+
+
+
+
 				  </div>
 				</div>
 				
