@@ -135,11 +135,23 @@
 					<div class="card-body">
 						<ol>
 							<c:forEach items="${lastArticles}" var="article">
-							<li class="text-truncate"><a href="/article/${article.id}">${article.title}</a></li>
+							<li class="text-truncate"><a href="/article?id=${article.id}">${article.title}</a></li>
 							</c:forEach>
 						</ol>
 					</div>
 				</div>
+				<br>
+				<div class="card">
+					<div class="card-header">热门文章</div>
+					<div class="card-body">
+						<ol>
+							<c:forEach items="${hotArticles}" var="article">
+							<li class="text-truncate"><a href="/article?id=${article.id}">${article.title}</a></li>
+							</c:forEach>
+						</ol>
+					</div>
+				</div>
+				
 			</div>
 		</div>
 	</div>
