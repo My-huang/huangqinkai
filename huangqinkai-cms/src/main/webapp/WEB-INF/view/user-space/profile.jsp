@@ -23,11 +23,11 @@
   </head>
   <body>
     <jsp:include page="/WEB-INF/inc/top.jsp"></jsp:include>
-	
+	<br/>
 	<!-- 横幅 -->
 	<div class="container">
 		<div class="row">
-			<div class="col-xs-12 my_banner">
+			<div class="col-md-12 my_banner">
 			</div>
 		</div>
 	</div>

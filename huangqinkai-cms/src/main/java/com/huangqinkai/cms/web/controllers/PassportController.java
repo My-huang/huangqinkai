@@ -125,6 +125,8 @@ public class PassportController {
 		try {
 			User user = passportService.login(userForm.getUsername(), userForm.getPassword());
 			Constant.setLoginUser(request, user);
+			String avatarpath = user.getAvatarpath();
+			request.getServletContext().setAttribute("avatarpath", avatarpath);
 			return "redirect:" + userForm.getSafeUrl();
 		} 
 		catch (CMSRuntimeException e) {

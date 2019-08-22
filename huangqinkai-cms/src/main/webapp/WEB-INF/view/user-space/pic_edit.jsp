@@ -26,7 +26,7 @@
   </head>
   <body>
     <jsp:include page="/WEB-INF/inc/top.jsp"></jsp:include>
-		<br/>
+	<br/>
 	<!-- 横幅 -->
 	<div class="container">
 		<div class="row">
@@ -39,7 +39,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-3">
-				<jsp:include page="/WEB-INF/inc/my_left.jsp"><jsp:param value="blog" name="module"/></jsp:include>
+				<jsp:include page="/WEB-INF/inc/my_left.jsp"><jsp:param value="picture" name="module"/></jsp:include>
 			</div>
 			<div class="col-md-9">
 				<div class="panel panel-default">

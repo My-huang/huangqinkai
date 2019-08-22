@@ -281,6 +281,9 @@
     <if test="article.hot != null">
     	AND b.hot = #{article.hot,jdbcType=BIT}
     </if>    
+    <if test="article.keywords != null">
+    	AND b.keywords like CONCAT ('%', #{article.keywords,jdbcType=VARCHAR},'%') 
+    </if>    
   </select>
   
   <select id="count" resultType="java.lang.Integer">
@@ -381,8 +384,8 @@
 	      <if test="updated != null">
 	       updated =  #{updated,jdbcType=TIMESTAMP},
 	      </if>
-	      <if test="content != null">
-	      content =  #{content,jdbcType=CLOB},
+	      <if test="deleted != null">
+	      deleted =  #{deleted,jdbcType=BIT},
 	      </if>
 	</set>
 		where id = #{id,jdbcType=INTEGER}

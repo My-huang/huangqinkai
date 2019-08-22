@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.github.pagehelper.PageHelper;
@@ -62,22 +63,43 @@ public class UserController {
 	
 	
 	@RequestMapping("/blogs")
-	public String blogs(Model model,HttpServletRequest requst,
+	public String blogs(String keyword,@RequestParam(value="status",defaultValue="1")Integer status,Model model,HttpServletRequest requst,
 			@RequestParam(value="page",defaultValue="1") Integer page){
 		
 		Article article = new Article();
 		User user = (User) requst.getSession().getAttribute(Constant.LOGIN_USER);
 		article.setAuthor(user);
+		
+		if(keyword != null && keyword != ""){
+			
+			article.setKeywords(keyword);
+		}
+		
+		
+		
+		if(status != 1){
+			if(status == 2){
+				article.setHot(true);
+			}
+			if(status == 3){
+				article.setStatus(1);
+			}
+			if(status == 4){
+				article.setDeleted(true);
+			}
+		}
+		
+		
+		
 		PageHelper.startPage(page, 3);
 		List<Article> articleList =  articleService.queryAll(article);
 		PageInfo<Article> pageInfo = new PageInfo<Article>(articleList,3);
-		String pageList = PageHelpUtil.page("/my/blogs", pageInfo, null);
+		String pageList = PageHelpUtil.page("/my/blogs", pageInfo, String.valueOf(status));
 		
 		model.addAttribute("blogs", articleList);
 		model.addAttribute("pageList", pageList);
-		
+		model.addAttribute("status", status);
 		return "user-space/blog_list";
-		
 	}	
 	
 	
@@ -125,6 +147,7 @@ public class UserController {
 	}
 	
 	@RequestMapping("/blog/remove")
+	@ResponseBody
 	public String remove(Integer id){
 		articleService.remove(id);
 		
@@ -144,7 +167,7 @@ public class UserController {
 		
 		User user = (User)request.getSession().getAttribute(Constant.LOGIN_USER);
 		String upload = FileUploadUtil.upload(request, file);
-		if(upload.equals("")){
+		if(!upload.equals("")){
 			user.setAvatarpath(upload);
 		}
 		
@@ -178,5 +201,25 @@ public class UserController {
 		return "user-space/profile";
 		
 	}
-
+	@ResponseBody
+	@RequestMapping("/blog/updateremove")
+	public boolean updateremove(Integer id){
+		Article article = new Article();
+		article.setId(id);
+		article.setUpdated(new Date());
+		article.setDeleted(true);
+		articleService.updateByKey(article);
+		return true;
+		
+	}
+	
+	@RequestMapping("/picture/edit")
+	public String pictureedit(){
+		return "/user-space/pic_edit";
+		
+	}
+	
+	
+	
+	
 }
