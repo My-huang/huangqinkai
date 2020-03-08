@@ -52,7 +52,7 @@
   <insert id="insertSelective" parameterType="io.hqk.jcartstoreback.po.Return" useGeneratedKeys="true" keyProperty="returnId">
     insert into jcart_return
     <trim prefix="(" suffix=")" suffixOverrides=",">
-    
+
       <if test="orderId != null">
         order_id,
       </if>
@@ -230,4 +230,16 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where return_id = #{returnId,jdbcType=INTEGER}
   </update>
+
+
+
+  <select id="selectPageByCustomerId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from jcart_return
+    where customer_id = #{customerId}
+    order by create_time desc
+  </select>
+
+
 </mapper>
