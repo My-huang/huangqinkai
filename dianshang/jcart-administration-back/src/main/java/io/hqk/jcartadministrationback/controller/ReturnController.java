@@ -42,7 +42,7 @@ public class ReturnController {
             returnListOutDTO.setUpdateTimestamp(aReturn.getUpdateTime().getTime());
             return returnListOutDTO;
         }).collect(Collectors.toList());
-        
+
 
         PageOutDTO<Object> objectPageOutDTO = new PageOutDTO<>();
         objectPageOutDTO.setTotal(page.getTotal());

@@ -11,10 +11,17 @@ import io.hqk.jcartadministrationback.po.Administrator;
 import io.hqk.jcartadministrationback.service.AdministratorService;
 import io.hqk.jcartadministrationback.util.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.*;
 
+import javax.xml.bind.DatatypeConverter;
+import java.security.SecureRandom;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -27,6 +34,18 @@ public class AdministratorController {
 
     @Autowired
     private JWTUtil jwtUtil;
+
+    @Autowired
+    private SecureRandom secureRandom;
+
+    @Autowired
+    private JavaMailSender mailSender;
+
+
+    @Value("${spring.mail.username}")
+    private String fromEmail;
+
+    private Map<String,String> emailPwdResteCodeMap = new HashMap<>();
 
     @GetMapping("/login")
     public AdministratorLoginOutDTO login(AdministratorLoginInDTO administratorLoginInDTO) throws ClientException {
@@ -79,6 +98,26 @@ public class AdministratorController {
 
     @GetMapping("/getPwdResetCode")
     public String getPwdResetCode(@RequestParam String email){
+
+
+        Administrator administrator = administratorService.getByEmail(email);
+        if (administrator == null){
+            throw new ClientException(ClientExceptionConstant.ADMINISTRATOR_EMAIL_NOT_EXIST_ERRCODE, ClientExceptionConstant.ADMINISTRATOR_EMAIL_NOT_EXIST_ERRMSG);
+        }
+
+
+        byte[] bytes = secureRandom.generateSeed(3);
+        String hex = DatatypeConverter.printHexBinary(bytes);
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom(fromEmail);
+        message.setTo(email);
+        message.setSubject("jcart管理员密码重置");
+        message.setText(hex);
+        mailSender.send(message);
+
+
+        emailPwdResteCodeMap.put(email, hex);
+
         return null;
     }
 
