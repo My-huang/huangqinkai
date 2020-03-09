@@ -3,6 +3,7 @@ package io.hqk.jcartadministrationback.service.impl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import io.hqk.jcartadministrationback.dao.CustomerMapper;
+import io.hqk.jcartadministrationback.dto.in.CustomerSearchInDTO;
 import io.hqk.jcartadministrationback.dto.in.CustomerSetStatusInDTO;
 import io.hqk.jcartadministrationback.po.Customer;
 import io.hqk.jcartadministrationback.service.CustomerService;
@@ -16,9 +17,13 @@ public class CustomerServiceImpl implements CustomerService {
     private CustomerMapper customerMapper;
 
     @Override
-    public Page<Customer> search(Integer pageNum) {
+    public Page<Customer> search(CustomerSearchInDTO customerSearchInDTO, Integer pageNum) {
         PageHelper.startPage(pageNum, 10);
-        Page<Customer> page = customerMapper.search();
+        Page<Customer> page = customerMapper.search(customerSearchInDTO.getUsername(),
+                customerSearchInDTO.getRealName(),
+                customerSearchInDTO.getMobile(),
+                customerSearchInDTO.getEmail(),
+                customerSearchInDTO.getStatus());
         return page;
     }
 
