@@ -27,7 +27,7 @@ public class ReturnController {
     public PageOutDTO<ReturnListOutDTO> search(ReturnSearchInDTO returnSearchInDTO,
                                                @RequestParam Integer pageNum){
 
-        Page<Return> page = returnService.searc(pageNum);
+        Page<Return> page = returnService.searc(returnSearchInDTO,pageNum);
 
         List<ReturnListOutDTO> returnListOutDTOS = page.stream().map(aReturn -> {
             ReturnListOutDTO returnListOutDTO = new ReturnListOutDTO();
