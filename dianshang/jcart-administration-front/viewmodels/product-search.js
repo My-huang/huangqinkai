@@ -29,6 +29,18 @@ var app = new Vue({
 
         },
 
+
+        handleClearClick(){
+            console.log('clear click');
+            this.productCode = '';
+            this.pageNum = '';
+            this.price = '';
+            this.stockQuantity = '';
+            this.selectedStatus = '';
+
+        },
+
+
         handlePageChange(val){
             console.log('page change');
             this.pageNum = val;
