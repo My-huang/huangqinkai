@@ -160,7 +160,7 @@ public class AdministratorController {
             administratorListOutDTO.setUsername(administrator.getUsername());
             administratorListOutDTO.setRealName(administrator.getRealName());
             administratorListOutDTO.setStatus(administrator.getStatus());
-            administratorListOutDTO.setCreateTimestamp(administrator.getCreateTime().getTime());
+            administratorListOutDTO.setTimestamp(administrator.getTime().getTime());
             return administratorListOutDTO;
         }).collect(Collectors.toList());
 
@@ -194,7 +194,7 @@ public class AdministratorController {
         administrator.setRealName(administratorCreateInDTO.getRealName());
         administrator.setEmail(administratorCreateInDTO.getEmail());
         administrator.setAvatarUrl(administratorCreateInDTO.getAvatarUrl());
-        administrator.setStatus((byte) AdministratorStatus.Enable.ordinal());
+        administrator.setStatus(administratorCreateInDTO.getStatus());
         administrator.setCreateTime(new Date());
 
         String bcryptHashString = BCrypt.withDefaults().hashToString(12, administratorCreateInDTO.getPassword().toCharArray());
