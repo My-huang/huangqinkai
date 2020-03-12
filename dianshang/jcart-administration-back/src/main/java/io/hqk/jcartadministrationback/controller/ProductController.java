@@ -9,6 +9,7 @@ import io.hqk.jcartadministrationback.dto.out.ProductListOutDTO;
 import io.hqk.jcartadministrationback.dto.out.ProductShowOutDTO;
 import io.hqk.jcartadministrationback.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,6 +19,9 @@ import java.util.List;
 @CrossOrigin
 public class ProductController {
 
+/*    @Value("${www.image.baseurl}")
+    private String imageBassurl;*/
+
     @Autowired
     private ProductService productService;
 
@@ -25,6 +29,10 @@ public class ProductController {
     public PageOutDTO<ProductListOutDTO> search(ProductSearchInDTO productSearchInDTO,
                                                 @RequestParam(required = false, defaultValue = "1") Integer pageNum){
         Page<ProductListOutDTO> page = productService.search(productSearchInDTO,pageNum);
+
+       /* for (ProductListOutDTO productListOutDTO : page) {
+            productListOutDTO.setMainPicUrl(imageBassurl + "/" + productListOutDTO.getMainPicUrl());
+        }*/
 
         PageOutDTO<ProductListOutDTO> pageOutDTO = new PageOutDTO<>();
         pageOutDTO.setTotal(page.getTotal());

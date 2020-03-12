@@ -6,6 +6,15 @@ public class AdministratorListOutDTO {
     private String realName;
     private Byte status;
     private Long createTimestamp;
+    private Long timestamp;
+
+    public Long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Long timestamp) {
+        this.timestamp = timestamp;
+    }
 
     public Integer getAdministratorId() {
         return administratorId;

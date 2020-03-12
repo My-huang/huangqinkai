@@ -16,8 +16,17 @@ public class Administrator {
     private Byte status;
 
     private Date createTime;
+    private Date time;
 
     private String avatarUrl;
+
+    public Date getTime() {
+        return time;
+    }
+
+    public void setTime(Date time) {
+        this.time = time;
+    }
 
     public Integer getAdministratorId() {
         return administratorId;
