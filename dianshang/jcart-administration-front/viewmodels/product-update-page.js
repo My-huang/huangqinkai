@@ -91,12 +91,19 @@ Vue.component({
         }
 
 
-       
+
 
 
         this.getProductById();
     },
     methods: {
+
+
+        handleGoBack() {
+            console.log('go back click');
+            app.selectMainPage = '1-1';
+        },
+
         handleUpdateClick() {
             console.log('update click');
             this.description = tinyMCE.activeEditor.getContent();
