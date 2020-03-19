@@ -15,9 +15,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.*;
+import sun.awt.util.IdentityLinkedList;
 
 import javax.xml.bind.DatatypeConverter;
 import java.security.SecureRandom;
@@ -25,6 +27,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @RestController
@@ -46,6 +49,9 @@ public class AdministratorController {
 
     @Autowired
     private EmailUtil emailUtil;
+
+    @Autowired
+    private RedisTemplate<String,String> redisTemplate;
 
 
     @Value("${spring.mail.username}")
@@ -97,9 +103,39 @@ public class AdministratorController {
     }
 
     @PostMapping("/changePwd")
-    public void changePwd(@RequestBody AdministratorChangePwdInDTO administratorChangePwdInDTO,
-                          @RequestAttribute Integer administratorId){
+    public <E> void changePwd(@RequestBody AdministratorChangePwdInDTO administratorChangePwdInDTO,
+                              @RequestAttribute Integer administratorId) throws ClientException {
+        AdministratorResetPwdInDTO administratorResetPwdInDTO = new AdministratorResetPwdInDTO();
+        String email = administratorResetPwdInDTO.getEmail();
+        if (email == null) {
+            throw new ClientException(ClientExceptionConstant.ADMINISTRATOR_PWDRESET_EMAIL_NONE_ERRCODE, ClientExceptionConstant.ADMINISTRATOR_PWDRESET_EMAIL_NONE_ERRMSG);
+        }
+        IdentityLinkedList<E> emailPwdResetCodeMap = new IdentityLinkedList<>();
+        String innerResetCode = (String) emailPwdResetCodeMap.get(Integer.parseInt(email));
+        if (innerResetCode == null) {
+            throw new ClientException(ClientExceptionConstant.ADMINISTRATOR_PWDRESET_INNER_RESETCODE_NONE_ERRCODE, ClientExceptionConstant.ADMINISTRATOR_PWDRESET_INNER_RESETCODE_NONE_ERRMSG);
+        }
+        String outerResetCode = administratorResetPwdInDTO.getResetCode();
+        if (outerResetCode == null) {
+            throw new ClientException(ClientExceptionConstant.ADMINISTRATOR_PWDRESET_OUTER_RESETCODE_NONE_ERRCODE, ClientExceptionConstant.ADMINISTRATOR_PWDRESET_OUTER_RESETCODE_NONE_ERRMSG);
+        }
+        if (!outerResetCode.equalsIgnoreCase(innerResetCode)){
+            throw new ClientException(ClientExceptionConstant.ADMINISTRATOR_PWDRESET_RESETCODE_INVALID_ERRCODE, ClientExceptionConstant.ADMINISTRATOR_PWDRESET_RESETCODE_INVALID_ERRMSG);
+        }
+        Administrator administrator = administratorService.getByEmail(email);
+        if (administrator == null){
+            throw new ClientException(ClientExceptionConstant.ADMINISTRATOR_EMAIL_NOT_EXIST_ERRCODE, ClientExceptionConstant.ADMINISTRATOR_EMAIL_NOT_EXIST_ERRMSG);
+        }
 
+        String newPwd = administratorResetPwdInDTO.getNewPwd();
+        if (newPwd == null){
+            throw new ClientException(ClientExceptionConstant.ADMINISTRATOR_NEWPWD_NOT_EXIST_ERRCODE, ClientExceptionConstant.ADMINISTRATOR_NEWPWD_NOT_EXIST_ERRMSG);
+        }
+        String bcryptHashString = BCrypt.withDefaults().hashToString(12, newPwd.toCharArray());
+        administrator.setEncryptedPassword(bcryptHashString);
+        administratorService.update(administrator);
+
+        emailPwdResetCodeMap.remove(email);
     }
 
     @GetMapping("/getPwdResetCode")
@@ -110,8 +146,9 @@ public class AdministratorController {
 
         emailUtil.send(fromEmail,email,"jcert管理员密码重置",hex);
 
-        emailPwdResteCodeMap.put(email, hex);
+//        emailPwdResteCodeMap.put(email, hex);
 
+        redisTemplate.opsForValue().set("EmailRedis"+email,hex,1L , TimeUnit.MINUTES);
         return null;
     }
 
