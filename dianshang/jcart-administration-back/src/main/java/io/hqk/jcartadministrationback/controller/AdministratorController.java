@@ -7,10 +7,12 @@ import io.hqk.jcartadministrationback.dto.in.*;
 import io.hqk.jcartadministrationback.dto.out.*;
 import io.hqk.jcartadministrationback.enumeration.AdministratorStatus;
 import io.hqk.jcartadministrationback.exception.ClientException;
+import io.hqk.jcartadministrationback.mq.EmailEvent;
 import io.hqk.jcartadministrationback.po.Administrator;
 import io.hqk.jcartadministrationback.service.AdministratorService;
 import io.hqk.jcartadministrationback.util.EmailUtil;
 import io.hqk.jcartadministrationback.util.JWTUtil;
+import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +48,8 @@ public class AdministratorController {
 
     @Autowired
     private EmailUtil emailUtil;
+    @Autowired
+    private RocketMQTemplate rocketMQTemplate;
 
 
     @Value("${spring.mail.username}")
@@ -108,7 +112,15 @@ public class AdministratorController {
         byte[] bytes = secureRandom.generateSeed(3);
         String hex = DatatypeConverter.printHexBinary(bytes);
 
-        emailUtil.send(fromEmail,email,"jcert管理员密码重置",hex);
+//        emailUtil.send(fromEmail,email,"jcert管理员密码重置",hex);
+
+
+        EmailEvent emailEvent = new EmailEvent();
+        emailEvent.setToEmail(email);
+        emailEvent.setTitle("jcert管理员密码重置");
+        emailEvent.setContent(hex);
+
+        rocketMQTemplate.convertAndSend("SendPwdResetByRamil",emailEvent);
 
         emailPwdResteCodeMap.put(email, hex);
 

@@ -15,6 +15,8 @@ public class EmailUtil {
 
     @Autowired
     private JavaMailSender mailSender;
+
+
     @Async
     public void send(String fromEmail,
                      String toEmail,
