@@ -1,7 +1,9 @@
 package io.hqk.jcartstoreback.dao;
 
 import io.hqk.jcartstoreback.po.ProductOperation;
+import org.springframework.stereotype.Component;
 
+@Component
 public interface ProductOperationMapper {
     int deleteByPrimaryKey(Integer productId);
 

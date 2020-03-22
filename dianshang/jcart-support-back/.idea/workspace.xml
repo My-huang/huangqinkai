@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a6a3747b-ca41-48f5-8205-818681cc7dc4" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../jcart-store-back/src/main/java/io/hqk/jcartstoreback/controller/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../jcart-store-back/src/main/java/io/hqk/jcartstoreback/controller/ProductController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcart-store-back/src/main/resources/generatorConfig.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../jcart-store-back/src/main/resources/generatorConfig.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcart-store-back/src/main/java/io/hqk/jcartstoreback/dao/ProductOperationMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/../jcart-store-back/src/main/java/io/hqk/jcartstoreback/dao/ProductOperationMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
