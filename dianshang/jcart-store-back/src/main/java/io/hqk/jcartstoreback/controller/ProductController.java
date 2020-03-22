@@ -9,6 +9,8 @@ import io.hqk.jcartstoreback.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/product")
 @CrossOrigin
@@ -34,6 +36,12 @@ public class ProductController {
     public ProductShowOutDTO getById(@RequestParam Integer productId){
         ProductShowOutDTO productShowOutDTO = productService.getShowById(productId);
         return productShowOutDTO;
+    }
+
+    @GetMapping("/hot")
+    public List<ProductListOutDTO> hot(){
+
+        return null;
     }
 
 }
